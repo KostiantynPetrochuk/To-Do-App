@@ -7,6 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVisibleTasks } from '../store/selectors/tasksSelectors';
+import { selectActiveFilter } from '../store/selectors/filterSelectors';
+
+// import { deleteTask, toggleStatus } from '../store';
+import { deleteTask, toggleStatus } from '../store/actions/tasksActions'; //v.1
+import { setFilter } from '../store/actions/filtersActions';
 
 export default function TasksList() {
 	const [checked, setChecked] = useState([0]);
@@ -24,32 +31,45 @@ export default function TasksList() {
 		setChecked(newChecked);
 	};
 
+
+	const dispatch = useDispatch();
+	const activeFilter = useSelector(selectActiveFilter);
+	const tasksList = useSelector(state => selectVisibleTasks(state, activeFilter)); //selector
+
 	return (
 		<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-			{[0, 1, 2].map((value) => {
-				const labelId = `checkbox-list-label-${value}`;
+			{tasksList.map((task) => {
+				const labelId = `checkbox-list-label-${task.id}`;
+				const textDecoration = task.status ? "line-through" : "none";
 
 				return (
 					<ListItem
-						key={value}
+						key={task.id}
 						secondaryAction={
-							<IconButton edge="end" aria-label="comments">
+							<IconButton
+								edge="end"
+								aria-label="comments"
+								onClick={() => dispatch(deleteTask(task.id))}>
 								<DeleteIcon />
 							</IconButton>
 						}
 						disablePadding
 					>
-						<ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+						<ListItemButton role={undefined} onClick={handleToggle(task.id)} dense>
 							<ListItemIcon>
 								<Checkbox
 									edge="start"
-									checked={checked.indexOf(value) !== -1}
+									checked={task.status}
 									tabIndex={-1}
 									disableRipple
 									inputProps={{ 'aria-labelledby': labelId }}
+									onChange={() => dispatch(toggleStatus(task.id))}
 								/>
 							</ListItemIcon>
-							<ListItemText id={labelId} /* sx={{ textDecoration: "line-through" }} */ primary={`Line item ${value + 1}`} />
+							<ListItemText
+								id={labelId}
+								primary={`${task.body}`}
+								sx={{ textDecoration: textDecoration }} />
 						</ListItemButton>
 					</ListItem>
 				);
