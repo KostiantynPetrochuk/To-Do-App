@@ -10,5 +10,5 @@ export const filtersReducer = (state = "all", action) => {
 			return state;
 		}
 	}
-}
+};
 

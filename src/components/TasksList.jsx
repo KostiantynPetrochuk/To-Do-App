@@ -1,3 +1,10 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { selectVisibleTasks } from '../store/selectors/tasksSelectors';
+import { selectActiveFilter } from '../store/selectors/filterSelectors';
+import { deleteTask, toggleStatus } from '../store/actions/tasksActions';
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -6,14 +13,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectVisibleTasks } from '../store/selectors/tasksSelectors';
-import { selectActiveFilter } from '../store/selectors/filterSelectors';
+import { Alert } from './Notice';
 
-// import { deleteTask, toggleStatus } from '../store';
-import { deleteTask, toggleStatus } from '../store/actions/tasksActions'; //v.1
-import { setFilter } from '../store/actions/filtersActions';
 
 export default function TasksList() {
 	const [checked, setChecked] = useState([0]);
@@ -34,46 +35,49 @@ export default function TasksList() {
 
 	const dispatch = useDispatch();
 	const activeFilter = useSelector(selectActiveFilter);
-	const tasksList = useSelector(state => selectVisibleTasks(state, activeFilter)); //selector
+	const tasksList = useSelector(state => selectVisibleTasks(state, activeFilter));
 
-	return (
-		<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-			{tasksList.map((task) => {
-				const labelId = `checkbox-list-label-${task.id}`;
-				const textDecoration = task.status ? "line-through" : "none";
+	if (tasksList.length > 0) {
+		return (
+			<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+				{tasksList.map((task) => {
+					const labelId = `checkbox-list-label-${task.id}`;
+					const textDecoration = task.status ? "line-through" : "none";
 
-				return (
-					<ListItem
-						key={task.id}
-						secondaryAction={
-							<IconButton
-								edge="end"
-								aria-label="comments"
-								onClick={() => dispatch(deleteTask(task.id))}>
-								<DeleteIcon />
-							</IconButton>
-						}
-						disablePadding
-					>
-						<ListItemButton role={undefined} onClick={handleToggle(task.id)} dense>
-							<ListItemIcon>
-								<Checkbox
-									edge="start"
-									checked={task.status}
-									tabIndex={-1}
-									disableRipple
-									inputProps={{ 'aria-labelledby': labelId }}
-									onChange={() => dispatch(toggleStatus(task.id))}
-								/>
-							</ListItemIcon>
-							<ListItemText
-								id={labelId}
-								primary={`${task.body}`}
-								sx={{ textDecoration: textDecoration }} />
-						</ListItemButton>
-					</ListItem>
-				);
-			})}
-		</List>
-	);
+					return (
+						<ListItem
+							key={task.id}
+							secondaryAction={
+								<IconButton
+									edge="end"
+									aria-label="comments"
+									onClick={() => dispatch(deleteTask(task.id))}>
+									<DeleteIcon />
+								</IconButton>
+							}
+							disablePadding>
+							<ListItemButton role={undefined} onClick={handleToggle(task.id)} dense>
+								<ListItemIcon>
+									<Checkbox
+										edge="start"
+										checked={task.status}
+										tabIndex={-1}
+										disableRipple
+										inputProps={{ 'aria-labelledby': labelId }}
+										onChange={() => dispatch(toggleStatus(task.id))}
+									/>
+								</ListItemIcon>
+								<ListItemText
+									id={labelId}
+									primary={`${task.body}`}
+									sx={{ textDecoration: textDecoration }} />
+							</ListItemButton>
+						</ListItem>
+					);
+				})}
+			</List>
+		);
+	} else {
+		return <Alert sx={{ marginTop: 5 }} severity="info">There is no task here!</Alert>
+	}
 }

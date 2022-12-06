@@ -1,5 +1,5 @@
 import './App.css';
-import SimpleContainer from './components/SimpleContainer';
+import SimpleContainer from '../SimpleContainer';
 
 
 function App() {
