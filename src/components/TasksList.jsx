@@ -42,7 +42,7 @@ export default function TasksList() {
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {tasksList.map((task) => {
           const labelId = `checkbox-list-label-${task.id}`;
-          const textDecoration = task.status ? "line-through" : "none";
+          const textDecoration = task.isDone ? "line-through" : "none";
 
           return (
             <ListItem
@@ -66,7 +66,7 @@ export default function TasksList() {
                 <ListItemIcon>
                   <Checkbox
                     edge="start"
-                    checked={task.status}
+                    checked={task.isDone}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}

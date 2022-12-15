@@ -9,7 +9,7 @@ export const tasksReducer = (state = [], action) => {
         {
           id: Date.now(),
           body: action.body,
-          status: false,
+          isDone: false,
         },
       ];
     }
@@ -18,7 +18,7 @@ export const tasksReducer = (state = [], action) => {
     }
     case TOGGLE_STATUS: {
       return state.map((task) =>
-        task.id === action.id ? { ...task, status: !task.status } : task
+        task.id === action.id ? { ...task, isDone: !task.isDone } : task
       );
     }
 
