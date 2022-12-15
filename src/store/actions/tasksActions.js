@@ -2,15 +2,15 @@ import { ADD_TASK, DELETE_TASK, TOGGLE_STATUS } from "../constants/tasksConst";
 
 export const addTask = (body) => ({
   type: ADD_TASK,
-  body
+  body,
 });
 
 export const toggleStatus = (id) => ({
   type: TOGGLE_STATUS,
-  id
+  id,
 });
 
 export const deleteTask = (id) => ({
   type: DELETE_TASK,
-  id
+  id,
 });

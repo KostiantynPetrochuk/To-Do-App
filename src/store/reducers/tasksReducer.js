@@ -18,12 +18,7 @@ export const tasksReducer = (state = [], action) => {
     }
     case TOGGLE_STATUS: {
       return state.map((task) =>
-        task.id === action.id
-          ? {
-            ...task,
-            status: !task.status,
-          }
-          : task
+        task.id === action.id ? { ...task, status: !task.status } : task
       );
     }
 

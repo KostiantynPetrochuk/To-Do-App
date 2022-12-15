@@ -7,7 +7,6 @@ export const loadState = () => {
     }
 
     return JSON.parse(savedState);
-
   } catch (error) {
     return undefined;
   }
