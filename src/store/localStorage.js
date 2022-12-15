@@ -1,14 +1,14 @@
 export const loadState = () => {
-	try {
-		const savedState = localStorage.getItem("state");
+  try {
+    const savedState = localStorage.getItem("state");
 
-		if (savedState === null) {
-			return [];
-		}
+    if (savedState === null) {
+      return [];
+    }
 
-		return JSON.parse(savedState);
+    return JSON.parse(savedState);
 
-	} catch (error) {
-		return undefined;
-	}
+  } catch (error) {
+    return undefined;
+  }
 };
