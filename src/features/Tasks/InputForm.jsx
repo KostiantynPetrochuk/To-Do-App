@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-// import { addTask } from "../store/actions/tasksActions";
-import { addTask } from "../store/tasksSlice";
-import { selectAllTasks } from "../store/selectors/tasksSelectors";
-import { Notice } from "./Notice";
-
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+import { addTask } from "./tasksSlice";
+import { selectAllTasks } from "./tasksSlice";
+import { Notice } from "../../components/Notice";
 
 export default function InputForm() {
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ export default function InputForm() {
       console.error(error);
     }
   };
-  //--------------messages-add-success-------------------
+
   const handleOpenAddSuccess = () => {
     setOpenAddSuccess(true);
   };
@@ -52,7 +51,7 @@ export default function InputForm() {
     }
     setOpenAddSuccess(false);
   };
-  //-------------messages-save-success---------------------
+
   const handleOpenSaveSuccess = () => {
     setOpenSaveSuccess(true);
   };
@@ -63,7 +62,7 @@ export default function InputForm() {
     }
     setOpenSaveSuccess(false);
   };
-  //--------------warning-message--------------------------
+
   const handleOpenWarning = () => {
     setOpenWarning(true);
   };

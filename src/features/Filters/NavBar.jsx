@@ -1,13 +1,12 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Divider from "@mui/material/Divider";
 
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-
-// import { setFilter } from "../store/actions/filtersActions";
-import { setFilter } from "../store/filterSlice";
+import { setFilter } from "./filtersSlice";
 
 export default function NavBar() {
   const [value, setValue] = useState(0);
