@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
 import { selectActiveFilter } from "../store/selectors/filterSelectors";
-import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
+// import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
+import { deleteTask, toggleStatus } from "../store/tasksSlice";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -33,10 +34,11 @@ export default function TasksList() {
 
   const dispatch = useDispatch();
   const activeFilter = useSelector(selectActiveFilter);
+  console.log(activeFilter);
   const tasksList = useSelector((state) =>
     selectVisibleTasks(state, activeFilter)
   );
-
+  console.log(tasksList);
   if (tasksList.length > 0) {
     return (
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>

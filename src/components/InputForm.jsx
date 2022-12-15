@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addTask } from "../store/actions/tasksActions";
+// import { addTask } from "../store/actions/tasksActions";
+import { addTask } from "../store/tasksSlice";
 import { selectAllTasks } from "../store/selectors/tasksSelectors";
 import { Notice } from "./Notice";
 

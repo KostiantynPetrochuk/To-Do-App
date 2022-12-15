@@ -6,7 +6,8 @@ import Divider from "@mui/material/Divider";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { setFilter } from "../store/actions/filtersActions";
+// import { setFilter } from "../store/actions/filtersActions";
+import { setFilter } from "../store/filterSlice";
 
 export default function NavBar() {
   const [value, setValue] = useState(0);
